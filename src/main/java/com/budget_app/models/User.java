@@ -1,6 +1,8 @@
-package com.budget_app.model;
+package com.budget_app.models;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -14,5 +16,6 @@ public class User {
 
     private String password;
 
-    // getters and setters
+    @OneToMany(mappedBy = "user")
+    private List<Category> categories;
 }
