@@ -14,6 +14,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -22,6 +23,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Category> categories;
+
+    public User(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
 
     public User() {
     }

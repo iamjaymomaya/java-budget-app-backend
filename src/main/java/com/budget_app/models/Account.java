@@ -1,36 +1,34 @@
 package com.budget_app.models;
 
-import com.budget_app.enums.CategoryType;
+import com.budget_app.enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="categories")
-public class Category {
+@Table(name = "accounts")
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private CategoryType type;
-
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AccountType type;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
 
-    private String color;
-
     private LocalDateTime deletedAt;
 
-    public Category() {
+    public Account() {
     }
 
     public Long getId() {
@@ -41,14 +39,6 @@ public class Category {
         this.id = id;
     }
 
-    public CategoryType getType() {
-        return type;
-    }
-
-    public void setType(CategoryType type) {
-        this.type = type;
-    }
-
     public String getName() {
         return name;
     }
@@ -57,20 +47,20 @@ public class Category {
         this.name = name;
     }
 
+    public AccountType getType() {
+        return type;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public LocalDateTime getDeletedAt() {
