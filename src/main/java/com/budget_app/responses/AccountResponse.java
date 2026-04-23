@@ -6,15 +6,13 @@ public class AccountResponse {
 
     private Long id;
     private String name;
-    private AccountType type;
 
     public AccountResponse() {
     }
 
-    public AccountResponse(Long id, String name, AccountType type) {
+    public AccountResponse(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.type = type;
     }
 
     public Long getId() {
@@ -31,13 +29,5 @@ public class AccountResponse {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public AccountType getType() {
-        return type;
-    }
-
-    public void setType(AccountType type) {
-        this.type = type;
     }
 }

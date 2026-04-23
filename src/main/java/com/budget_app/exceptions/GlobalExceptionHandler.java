@@ -3,6 +3,7 @@ package com.budget_app.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -32,5 +33,18 @@ public class GlobalExceptionHandler {
         Map<String, Object> body = new HashMap<>();
         body.put("message", ex.getReason());
         return ResponseEntity.status(ex.getStatusCode()).body(body);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("message", "Malformed JSON request");
+
+        Throwable mostSpecificCause = ex.getMostSpecificCause();
+        if (mostSpecificCause != null) {
+            body.put("detail", mostSpecificCause.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 }

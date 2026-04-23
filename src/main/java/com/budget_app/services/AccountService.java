@@ -30,7 +30,6 @@ public class AccountService {
 
         Account account = new Account();
         account.setName(request.getName());
-        account.setType(request.getType());
         account.setUser(user);
 
         Account saved = accountRepository.save(account);
@@ -52,7 +51,6 @@ public class AccountService {
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Account not found"));
 
         account.setName(request.getName());
-        account.setType(request.getType());
         Account saved = accountRepository.save(account);
         return toResponse(saved);
     }
@@ -74,6 +72,6 @@ public class AccountService {
     }
 
     private AccountResponse toResponse(Account account) {
-        return new AccountResponse(account.getId(), account.getName(), account.getType());
+        return new AccountResponse(account.getId(), account.getName());
     }
 }

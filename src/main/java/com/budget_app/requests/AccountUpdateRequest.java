@@ -20,10 +20,6 @@ public class AccountUpdateRequest {
         this.name = name;
     }
 
-    public AccountType getType() {
-        return type;
-    }
-
     public void setType(AccountType type) {
         this.type = type;
     }

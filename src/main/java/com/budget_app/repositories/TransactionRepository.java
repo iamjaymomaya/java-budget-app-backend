@@ -18,6 +18,16 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 	    LocalDate to
     );
 
+    List<Transaction> findAllByAccount_User_IdAndDeletedAtIsNullAndTransactionDateGreaterThanEqual(
+	    Long userId,
+	    LocalDate from
+    );
+
+    List<Transaction> findAllByAccount_User_IdAndDeletedAtIsNullAndTransactionDateLessThanEqual(
+	    Long userId,
+	    LocalDate to
+    );
+
     List<Transaction> findAllByAccount_User_IdAndDeletedAtIsNull(Long userId);
 
     Optional<Transaction> findByIdAndAccount_User_IdAndDeletedAtIsNull(Long id, Long userId);

@@ -1,5 +1,6 @@
 package com.budget_app.services;
 
+import com.budget_app.enums.CategoryType;
 import com.budget_app.models.Category;
 import com.budget_app.models.User;
 import com.budget_app.repositories.CategoryRepository;
@@ -41,6 +42,22 @@ public class CategoryService {
 	public List<CategoryResponse> list() {
 		User user = currentUserService.requireCurrentUser();
 		return categoryRepository.findAllByUserIdAndDeletedAtIsNull(user.getId())
+				.stream()
+				.map(this::toResponse)
+				.toList();
+	}
+
+	public List<CategoryResponse> listIncome() {
+		return listByType(CategoryType.INCOME);
+	}
+
+	public List<CategoryResponse> listExpense() {
+		return listByType(CategoryType.EXPENSE);
+	}
+
+	private List<CategoryResponse> listByType(CategoryType type) {
+		User user = currentUserService.requireCurrentUser();
+		return categoryRepository.findAllByUserIdAndTypeAndDeletedAtIsNull(user.getId(), type)
 				.stream()
 				.map(this::toResponse)
 				.toList();

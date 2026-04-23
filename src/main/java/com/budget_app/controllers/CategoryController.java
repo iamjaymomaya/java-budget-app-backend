@@ -29,6 +29,16 @@ public class CategoryController {
 		return categoryService.list();
 	}
 
+	@GetMapping("/income")
+	public List<CategoryResponse> listIncome() {
+		return categoryService.listIncome();
+	}
+
+	@GetMapping("/expense")
+	public List<CategoryResponse> listExpense() {
+		return categoryService.listExpense();
+	}
+
 	@PutMapping("/{id}")
 	public CategoryResponse update(@PathVariable Long id, @Valid @RequestBody CategoryUpdateRequest request) {
 		return categoryService.update(id, request);

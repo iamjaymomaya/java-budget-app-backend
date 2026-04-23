@@ -58,13 +58,20 @@ public class TransactionService {
 	public List<TransactionResponse> list(LocalDate from, LocalDate to) {
 		User user = currentUserService.requireCurrentUser();
 
-		if ((from == null) != (to == null)) {
-			throw new ResponseStatusException(BAD_REQUEST, "Both 'from' and 'to' must be provided together");
+		if (from != null && to != null && from.isAfter(to)) {
+			throw new ResponseStatusException(BAD_REQUEST, "'from' must be on or before 'to'");
 		}
 
 		List<Transaction> transactions;
 		if (from != null && to != null) {
-			transactions = transactionRepository.findAllByAccount_User_IdAndDeletedAtIsNullAndTransactionDateBetween(user.getId(), from, to);
+			transactions = transactionRepository
+					.findAllByAccount_User_IdAndDeletedAtIsNullAndTransactionDateBetween(user.getId(), from, to);
+		} else if (from != null) {
+			transactions = transactionRepository
+					.findAllByAccount_User_IdAndDeletedAtIsNullAndTransactionDateGreaterThanEqual(user.getId(), from);
+		} else if (to != null) {
+			transactions = transactionRepository
+					.findAllByAccount_User_IdAndDeletedAtIsNullAndTransactionDateLessThanEqual(user.getId(), to);
 		} else {
 			transactions = transactionRepository.findAllByAccount_User_IdAndDeletedAtIsNull(user.getId());
 		}

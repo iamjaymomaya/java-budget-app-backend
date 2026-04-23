@@ -17,10 +17,6 @@ public class Account {
     @Column(nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private AccountType type;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
@@ -45,14 +41,6 @@ public class Account {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public AccountType getType() {
-        return type;
-    }
-
-    public void setType(AccountType type) {
-        this.type = type;
     }
 
     public User getUser() {
